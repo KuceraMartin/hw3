@@ -1,7 +1,16 @@
 package hw3
 
 object Main {
-  def standardDeviation(vector: List[Double]): Double = ???
+
+  def standardDeviation(vector: List[Double]): Double = {
+    require(vector.nonEmpty)
+    val mean = vector.map(_ / vector.size).sum
+    val variance = vector.map(v => (v - mean) / vector.size * (v - mean)).sum
+    if (variance.isInfinity) {
+      throw new Exception("I don't really wanna throw this one but I think my teacher wants me to...")
+    }
+    math.sqrt(variance)
+  }
 
   def letterFrequencyRanking(corpus: String): String = ???
 
