@@ -12,7 +12,11 @@ object Main {
     math.sqrt(variance)
   }
 
-  def letterFrequencyRanking(corpus: String): String = ???
+  def letterFrequencyRanking(corpus: String): String = {
+    val preproc = corpus.filter(_.isLetter).toLowerCase
+    val freq = preproc.foldLeft(Map[Char, Int]().withDefaultValue(0)) { (map, char) => map + (char -> (map(char) + 1)) }
+    freq.toList.sortBy(_.swap)(Ordering.Tuple2(Ordering.Int.reverse, Ordering.Char)).map(_._1).mkString
+  }
 
   def romanji(katakana: String): String = ???
 
