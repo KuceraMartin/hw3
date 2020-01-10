@@ -20,7 +20,14 @@ object Main {
 
   def romanji(katakana: String): String = ???
 
-  def gray(bits: Int): List[String] = ???
+  def gray(bits: Int): List[String] = {
+    require(bits >= 0)
+    if (bits == 0) List.empty
+    else (2 to bits).foldLeft(List("0", "1")) { (prev, _) =>
+      prev.map("0" + _) ++ prev.reverse.map("1" + _)
+    }
+  }
+
 }
 
 object Katakana {
