@@ -18,7 +18,17 @@ object Main {
     freq.toList.sortBy(_.swap)(Ordering.Tuple2(Ordering.Int.reverse, Ordering.Char)).map(_._1).mkString
   }
 
-  def romanji(katakana: String): String = ???
+  def romanji(katakana: String): String =
+    katakana.flatMap(Katakana.symbols).mkString
+      .replace("iャ", "ya")
+      .replace("iュ", "yu")
+      .replace("iョ", "yo")
+      .replaceAll("ッ([a-z&&[^aeiouy]])", "$1$1")
+      .replace("aー", "ā")
+      .replace("iー", "ī")
+      .replace("eー", "ē")
+      .replace("uー", "ū")
+      .replace("oー", "ō")
 
   def gray(bits: Int): List[String] = {
     require(bits >= 0)
@@ -48,12 +58,5 @@ object Katakana {
     'ヤ' -> List('y','a'),                        'ユ' -> List('y','u'),                        'ヨ' -> List('y','o'),
     'ラ' -> List('r','a'), 'リ' -> List('r','i'), 'ル' -> List('r','u'), 'レ' -> List('r','e'), 'ロ' -> List('r','o'),
     'ワ' -> List('w','a'), 'ヰ' -> List('w','i'),                        'ヱ' -> List('w','e'), 'ヲ' -> List('w','o'),
-  )
-  val longVowels = Map(
-    'a' -> 'ā',
-    'i' -> 'ī',
-    'e' -> 'ē',
-    'u' -> 'ū',
-    'o' -> 'ō'
-  )
+  ).withDefault(List(_))
 }
