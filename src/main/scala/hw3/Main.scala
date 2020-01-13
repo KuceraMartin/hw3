@@ -14,7 +14,7 @@ object Main {
 
   def letterFrequencyRanking(corpus: String): String = {
     val preproc = corpus.filter(_.isLetter).toLowerCase
-    val freq = preproc.foldLeft(Map[Char, Int]().withDefaultValue(0)) { (map, char) => map + (char -> (map(char) + 1)) }
+    val freq = preproc.groupMapReduce(identity)(_ => 1)(_ + _)
     freq.toList.sortBy(_.swap)(Ordering.Tuple2(Ordering.Int.reverse, Ordering.Char)).map(_._1).mkString
   }
 
