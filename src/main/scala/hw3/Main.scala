@@ -3,6 +3,7 @@ package hw3
 object Main {
 
   def standardDeviation(vector: List[Double]): Double = {
+    require(vector != null)
     require(vector.nonEmpty)
     val mean = vector.map(_ / vector.size).sum
     val variance = vector.map(v => (v - mean) / vector.size * (v - mean)).sum
@@ -13,12 +14,14 @@ object Main {
   }
 
   def letterFrequencyRanking(corpus: String): String = {
+    require(corpus != null)
     val preproc = corpus.filter(_.isLetter).toLowerCase
     val freq = preproc.groupMapReduce(identity)(_ => 1)(_ + _)
     freq.toList.sortBy(_.swap)(Ordering.Tuple2(Ordering.Int.reverse, Ordering.Char)).map(_._1).mkString
   }
 
-  def romanji(katakana: String): String =
+  def romanji(katakana: String): String = {
+    require(katakana != null)
     katakana.flatMap(Katakana.symbols).mkString
       .replace("iャ", "ya")
       .replace("iュ", "yu")
@@ -29,6 +32,7 @@ object Main {
       .replace("eー", "ē")
       .replace("uー", "ū")
       .replace("oー", "ō")
+  }
 
   def gray(bits: Int): List[String] = {
     require(bits >= 0)
